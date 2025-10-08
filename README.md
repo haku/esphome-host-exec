@@ -1,5 +1,18 @@
-Barely tested prototype that still includes some LLM generated code that needs further review.
-You MUST review this code yourself before using.
+WARNING
+=======
+
+Barely tested prototype that still includes some LLM generated code that needs
+further review.  You MUST review this code yourself before using.
+
+What this does
+--------------
+
+Provides a CLI interface when running esphome in [Host
+Platform](https://esphome.io/components/host/) mode.  Thus any linux box can
+expose sensors and actions to Home Assistant.
+
+Notes
+-----
 
 TODO:
 * Properly review `host_exec.h`.
