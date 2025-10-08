@@ -17,5 +17,6 @@ Notes
 TODO:
 * Properly review `host_exec.h`.
 * Change the sensor to use the command exit code?
+* Add a sensor that reads the content of a file?  Maybe with regexps?
 * Make a number sensor that reads command output?
 * Use root component for some kinda monitoring (currently its only there to make the build happy).
