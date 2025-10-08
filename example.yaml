@@ -17,7 +17,7 @@ logger:
 binary_sensor:
   - platform: host_exec
     name: "Flag Exists"
-    command: "test -f ${flag_file} && echo 1 || echo 0"
+    command: "test -f ${flag_file}"
     update_interval: 5s
 
 button:

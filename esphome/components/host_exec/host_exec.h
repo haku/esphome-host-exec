@@ -7,6 +7,15 @@
 namespace esphome {
 namespace host_exec {
 
+  static int run_status_only(const std::string &cmd) {
+    FILE *fp = popen(cmd.c_str(), "r");
+    if (!fp) return -1;
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), fp)) {
+    }
+    return pclose(fp);
+  }
+
   static std::string run_command(const std::string &cmd) {
     FILE *fp = popen(cmd.c_str(), "r");
     if (!fp) return "";

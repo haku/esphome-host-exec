@@ -13,9 +13,8 @@ class HostExecBinarySensor : public PollingComponent, public binary_sensor::Bina
     void set_command(const std::string &cmd) { this->command_ = cmd; }
 
     void update() override {
-      std::string output = run_command(this->command_);
-      bool state = (output == "1" || output == "true" || output == "on");
-      this->publish_state(state);
+      int status = run_status_only(this->command_);
+      this->publish_state(status == 0);
     }
 
   protected:
