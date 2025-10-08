@@ -1,0 +1,26 @@
+substitutions:
+  flag_file: /tmp/esphome-host-test-flag
+
+external_components:
+  - source: esphome/components
+    components: [host_exec]
+
+esphome:
+  name: host-exec-example
+
+host:
+host_exec:
+
+api:
+logger:
+
+binary_sensor:
+  - platform: host_exec
+    name: "Flag Exists"
+    command: "test -f ${flag_file} && echo 1 || echo 0"
+    update_interval: 5s
+
+button:
+  - platform: host_exec
+    name: "Create or Delete Flag"
+    command: "test -f ${flag_file} && rm ${flag_file} || touch ${flag_file}"
