@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+dir="$HOME/.pyvenv/esphome"
+if [ "$1" = "install" ] ; then
+  mkdir -p "$dir"
+  python3 -m venv "$dir"
+  source "$dir/bin/activate"
+  pip3 install esphome
+elif ! [ -e "$dir" ] ; then
+  echo "run: $0 install"
+else
+  source "$dir/bin/activate"
+fi
