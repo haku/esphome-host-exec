@@ -1,0 +1,20 @@
+substitutions:
+  device_name: crow
+
+external_components:
+  - source: esphome/components
+    components: [host_exec]
+
+esphome:
+  name: ${device_name}
+
+host:
+host_exec:
+
+api:
+logger:
+
+button:
+  - platform: host_exec
+    name: "Shutdown"
+    command: "systemctl poweroff"
