@@ -5,6 +5,14 @@ Provides a CLI interface when running ESPHome in [Host
 Platform](https://esphome.io/components/host/) mode.  Thus any linux box can
 expose sensors and actions to Home Assistant.
 
+Usage
+-----
+
+```shell
+$ esphome compile ./example.yaml
+$ ./install-systemd-service.py ./example.yaml
+```
+
 Notes
 -----
 
