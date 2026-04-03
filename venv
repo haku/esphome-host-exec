@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-dir="$HOME/.pyvenv/esphome"
+dir="$HOME/.cache/pyvenv-esphome"
 if [ "$1" = "install" ] ; then
   mkdir -p "$dir"
   python3 -m venv "$dir"
