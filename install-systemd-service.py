@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import re
 import subprocess
 import sys
 import yaml
@@ -56,6 +57,13 @@ extra_service_path = f'{yaml_dir_path}/{name}.extraservice'
 if os.path.exists(extra_service_path):
   extra_service = readtxt(extra_service_path)
 
+user_config ="""
+DynamicUser=yes
+User={service_name}
+"""
+if re.search(r'^User=', extra_service, re.MULTILINE):
+  user_config = ''
+
 service_config = f"""
 [Unit]
 Description={service_name}
@@ -64,8 +72,7 @@ After=network.target
 [Service]
 Environment="PATH=/usr/bin:/bin" "SHELL=/usr/bin/zsh" "HOME=/tmp"
 Type=simple
-DynamicUser=yes
-User={service_name}
+{user_config}
 PrivateTmp=true
 ExecStart={opt_dir}/{name}
 Restart=always

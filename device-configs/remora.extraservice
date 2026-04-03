@@ -1,3 +1,4 @@
 DeviceAllow=/dev/i2c-20
 DeviceAllow=/dev/i2c-21
+User=esphome
 SupplementaryGroups=i2c
