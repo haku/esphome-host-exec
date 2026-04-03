@@ -30,8 +30,10 @@ def check_input(yaml_path):
 yaml_path = os.path.abspath(sys.argv[1])
 check_input(yaml_path)
 
+bin_dir_path = os.path.dirname(yaml_path)
 name = get_config_name(yaml_path)
-bin_path = f'.esphome/build/{name}/.pioenvs/{name}/program'
+bin_path = f'{bin_dir_path}/.esphome/build/{name}/.pioenvs/{name}/program'
+
 if not os.path.exists(bin_path):
   print(f'not found: {bin_path}')
   print('are you in same dir as when you ran `esphome compile`?')
