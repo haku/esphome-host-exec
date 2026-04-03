@@ -9,6 +9,7 @@ esphome:
   name: ${device_name}
 
 host:
+  mac_address: "b8:27:eb:4e:24:90"
 host_exec:
 
 api:
