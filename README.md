@@ -17,25 +17,14 @@ $ ./install-systemd-service.py ./example.yaml
 
 Then manually add device in Home Assistant ESPHome.
 
-Users / Access Control
-----------------------
+Allowing Agent to Call Shutdown
+-------------------------------
 
-Allowing a `DynamicUser=yes` unit to shutdown does not seem to be possible ATM (on bookworm), so this is a bit convoluted.
-
-## Use dbus-broker
-
-* Need to be using dbus-broker because of this bug: https://github.com/systemd/systemd/issues/22737
-* Full instructions: https://github-wiki-see.page/m/bus1/dbus-broker/wiki
-* (Might not actually be needed if not using DynamicUser?)
-
-```shell
-$ apt install dbus-broker
-$ systemctl enable dbus-broker.service
-$ systemctl --global enable dbus-broker.service
-```
-
-systemd generally inhibits setuid so we have to go via polkit, buut...
-polkit does not like systemd's DynamicUser=true OR SupplementaryGroups so lets just given the user permission directly.
+Allowing a `DynamicUser=yes` unit to shutdown does not seem to be possible ATM
+(on bookworm), so this is the best approach i can come up with.  systemd
+generally inhibits setuid so we have to go via polkit, buut...  polkit does not
+like systemd's DynamicUser=true OR SupplementaryGroups so lets just given the
+user permission directly.
 
 ```
 $ useradd --system esphome
