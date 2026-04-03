@@ -9,11 +9,50 @@ Usage
 -----
 
 ```shell
+$ ./venv install
+$ . ./venv
 $ nice -n 19 ionice -c 3 esphome compile ./example.yaml
 $ ./install-systemd-service.py ./example.yaml
 ```
 
 Then manually add device in Home Assistant ESPHome.
+
+Users / Access Control
+----------------------
+
+Allowing a `DynamicUser=yes` unit to shutdown does not seem to be possible ATM (on bookworm), so this is a bit convoluted.
+
+## Use dbus-broker
+
+* Need to be using dbus-broker because of this bug: https://github.com/systemd/systemd/issues/22737
+* Full instructions: https://github-wiki-see.page/m/bus1/dbus-broker/wiki
+* (Might not actually be needed if not using DynamicUser?)
+
+```shell
+$ apt install dbus-broker
+$ systemctl enable dbus-broker.service
+$ systemctl --global enable dbus-broker.service
+```
+
+systemd generally inhibits setuid so we have to go via polkit, buut...
+polkit does not like systemd's DynamicUser=true OR SupplementaryGroups so lets just given the user permission directly.
+
+```
+$ useradd --system esphome
+$ vim /etc/polkit-1/rules.d/esphome.rules
+polkit.addRule(function(action, subject) {
+  //polkit.log("action=" + action);
+  //polkit.log("subject=" + subject);
+
+  if (action.id == "org.freedesktop.login1.power-off" ||
+      action.id == "org.freedesktop.login1.power-off-ignore-inhibit" ||
+      action.id == "org.freedesktop.login1.power-off-multiple-sessions") {
+    if (subject.user == "esphome") {
+        return polkit.Result.YES;
+    }
+  }
+});
+```
 
 Notes
 -----
