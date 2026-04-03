@@ -13,6 +13,8 @@ $ nice -n 19 ionice -c 3 esphome compile ./example.yaml
 $ ./install-systemd-service.py ./example.yaml
 ```
 
+Then manually add device in Home Assistant ESPHome.
+
 Notes
 -----
 
