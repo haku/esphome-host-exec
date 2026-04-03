@@ -9,7 +9,7 @@ Usage
 -----
 
 ```shell
-$ esphome compile ./example.yaml
+$ nice -n 19 ionice -c 3 esphome compile ./example.yaml
 $ ./install-systemd-service.py ./example.yaml
 ```
 
