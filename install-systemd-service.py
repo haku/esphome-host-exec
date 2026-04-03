@@ -70,7 +70,13 @@ WantedBy=multi-user.target
 """
 
 run(['sudo', 'mkdir', '-p', opt_dir])
-run(['sudo', 'cp', bin_path, f'{opt_dir}/{name}'])
+
+opt_bin_path = f'{opt_dir}/{name}'
+if os.path.exists(opt_bin_path):
+  # can not overwrite binary if its running
+  run(['sudo', 'rm', opt_bin_path])
+run(['sudo', 'cp', bin_path, opt_bin_path])
+
 run(['sudo', 'tee', service_file], service_config)
 run(['sudo', 'systemctl', 'daemon-reload'])
 run(['sudo', 'systemctl', 'enable', service_name])
