@@ -14,6 +14,10 @@ def run(args, input=None):
       timeout=30)
   return r.stdout
 
+def readtxt(path):
+  with open(path, "r") as f:
+    return f.read()
+
 def get_config_name(path):
   r = run(['esphome', 'config', path])
   y = yaml.safe_load(r)
@@ -30,9 +34,9 @@ def check_input(yaml_path):
 yaml_path = os.path.abspath(sys.argv[1])
 check_input(yaml_path)
 
-bin_dir_path = os.path.dirname(yaml_path)
+yaml_dir_path = os.path.dirname(yaml_path)
 name = get_config_name(yaml_path)
-bin_path = f'{bin_dir_path}/.esphome/build/{name}/.pioenvs/{name}/program'
+bin_path = f'{yaml_dir_path}/.esphome/build/{name}/.pioenvs/{name}/program'
 
 if not os.path.exists(bin_path):
   print(f'not found: {bin_path}')
@@ -46,6 +50,11 @@ print(f'systemd service file: {service_file}')
 
 opt_dir = f'/opt/{service_name}'
 print(f'opt dir for binary: {opt_dir}')
+
+extra_service = ''
+extra_service_path = f'{yaml_dir_path}/{name}.extraservice'
+if os.path.exists(extra_service_path):
+  extra_service = readtxt(extra_service_path)
 
 service_config = f"""
 [Unit]
@@ -63,6 +72,7 @@ Restart=always
 RestartSec=60
 KillSignal=SIGINT
 TimeoutStopSec=30
+{extra_service}
 
 [Install]
 WantedBy=multi-user.target

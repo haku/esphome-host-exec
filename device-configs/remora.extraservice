@@ -1,0 +1,3 @@
+DeviceAllow=/dev/i2c-20
+DeviceAllow=/dev/i2c-21
+SupplementaryGroups=i2c
