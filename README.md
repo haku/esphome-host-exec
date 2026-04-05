@@ -1,12 +1,19 @@
 What this does
 --------------
 
-Provides a CLI interface when running ESPHome in [Host
-Platform](https://esphome.io/components/host/) mode.  Thus any linux box can
-expose sensors and actions to Home Assistant.
+* A simple way to use Home Assistant to run pre-defined commands on any linux
+box with very minimal overheads.
+* The daemon uses ~3 MiB of RAM.
+* Configuration is done via the same yaml files as when ESPHome is run on
+microcontroller.  There are examples in the `device-configs` directory.
+* This repo contains tooling to build ESPHome in [Host
+Platform](https://esphome.io/components/host/) mode and install it as a systemd
+service.
 
 Usage
 -----
+
+These commands assume a Debian-like OS, but may work on a variety of distros.
 
 ```shell
 $ ./venv install
@@ -16,6 +23,9 @@ $ ./install-systemd-service.py ./example.yaml
 ```
 
 Then manually add device in Home Assistant ESPHome.
+
+Note: you must manually put the NIC MAC in the yaml config file as ESPHome does
+not seem to detect this automatically in host mode.
 
 Allowing Agent to Call Shutdown
 -------------------------------
@@ -43,11 +53,11 @@ polkit.addRule(function(action, subject) {
 });
 ```
 
-Notes
------
+Possible Improvements
+---------------------
 
-TODO:
-* Properly review `host_exec.h`.
-* Add a sensor that reads the content of a file?  Maybe with regexps?
-* Make a number sensor that reads command output?
-* Use root component for some kinda monitoring (currently its only there to make the build happy).
+* Review `host_exec.h` as it can likely be further improved.
+* Maybe add a sensor that reads the content of a file?  Maybe with regexps?
+* Maybe make a number sensor that reads command output?
+* Could use root component for some kinda monitoring (currently its only there
+  to make the build happy).
