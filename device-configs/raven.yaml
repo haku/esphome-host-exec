@@ -1,0 +1,25 @@
+substitutions:
+  device_name: raven
+
+external_components:
+  - source: ../esphome/components
+    components: [host_exec]
+
+esphome:
+  name: ${device_name}
+
+host:
+  mac_address: "e4:5f:01:41:c3:f3"
+host_exec:
+
+api:
+logger:
+
+button:
+  - platform: host_exec
+    name: "Shutdown"
+    command: "systemctl poweroff"
+
+  - platform: host_exec
+    name: "Start Scanner"
+    command: "/opt/esphome-raven/raven-start-scanner"

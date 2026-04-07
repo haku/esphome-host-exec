@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -eu
+echo -ne '\x1bZ\x0d' > /dev/ttyACM0

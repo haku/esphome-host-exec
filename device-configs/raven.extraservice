@@ -1,0 +1,3 @@
+DeviceAllow=/dev/ttyACM0
+User=esphome
+SupplementaryGroups=dialout
